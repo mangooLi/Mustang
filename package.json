@@ -1,0 +1,29 @@
+{
+  "name": "mustang",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./build/src/server.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "socket.io",
+    "rabbitmq",
+    "mongodb"
+  ],
+  "author": "sino",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/debug": "^0.0.30",
+    "@types/del": "^3.0.0",
+    "@types/gulp": "^4.0.5",
+    "@types/gulp-shell": "^0.0.31",
+    "@types/node": "^9.4.7",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-shell": "^0.6.5",
+    "gulpclass": "^0.1.2",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2"
+  }
+}
