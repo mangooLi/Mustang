@@ -21,6 +21,7 @@
     "@types/gulp-shell": "^0.0.31",
     "@types/node": "^9.4.7",
     "@types/socket.io": "^1.4.32",
+    "@types/socket.io-redis": "^1.0.25",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-shell": "^0.6.5",
@@ -30,6 +31,7 @@
   },
   "dependencies": {
     "express": "^4.15.2",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "socket.io-redis": "^5.2.0"
   }
 }

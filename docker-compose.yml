@@ -1,0 +1,12 @@
+version: '2'
+services:
+  mongodb:
+    image: index.alauda.cn/library/mongo:3.4.0
+    ports:
+      - 27017:27017
+  redis:
+    image: index.alauda.cn/library/redis:3.2.1
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_PASS:**None**

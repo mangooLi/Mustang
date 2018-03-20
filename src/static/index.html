@@ -18,11 +18,16 @@
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script>
       $(function(){
-        var socket = io();
+        var socket = io({
+          path: '/mustang'
+        });
         $("form").submit(function(){
           socket.emit('chat message', $('#m').val());
           $('#m').val('');
           return false;
+        });
+        socket.on('test', function(msg) {
+          console.log(msg);
         });
       });
     </script>
