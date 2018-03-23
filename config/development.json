@@ -1,0 +1,15 @@
+{
+    "redis": {
+        "host": "localhost",
+        "port": 6379,
+        "tls": false
+    },
+    "jwt": {
+        "secret": "development",
+        "expire": 600000,
+        "aud": "test.vip56.cn"
+    },
+    "mongodb": {
+        "connection": "mongodb://localhost/test"
+    }
+}
