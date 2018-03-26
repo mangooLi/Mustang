@@ -36,3 +36,4 @@ stage.json
 * MongoDB采用[mongoose](https://github.com/Automattic/mongoose)支持
 * MemoryCache采用[node-cache](https://github.com/ptarjan/node-cache)支持
 * IOC采用[InversifyJS](https://github.com/inversify/InversifyJS)支持
+* 日志采用[node-bunyan](https://github.com/trentm/node-bunyan)配合[bunyan-logstash-tcp](https://github.com/transcovo/bunyan-logstash-tcp)直接接入现有的`ELK`日志体系中
