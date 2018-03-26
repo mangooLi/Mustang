@@ -1,5 +1,5 @@
 ## 环境说明
-全局需要安装`gulp`，`ts-node`，`typescript`库。
+全局需要安装`gulp`，`ts-node`，`typescript`库。为了更好的理解改项目，改项目的结构将采用`UML类图`表示，如果不熟悉的开发可以跳转到[UML学习](http://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html)进行学习。
 
 ## 各模块说明
 
