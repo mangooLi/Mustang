@@ -1,6 +1,6 @@
 
 /**
- * Redis配置
+ * Redis??
  */
 export interface RedisSection {
     host: string;

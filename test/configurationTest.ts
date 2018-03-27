@@ -1,10 +1,11 @@
 import "reflect-metadata";
 import {JsonConfigurationManager} from "../src/configuration/JsonConfigurationManager";
-import {RedisSection} from "../src/configuration/RedisSection";
 import {expect} from "chai";
 import "mocha";
+import {RedisSection} from "../src/configuration/RedisSection";
 import {JsonWebTokenSection} from "../src/configuration/JsonWebTokenSection";
 import {MongoDbSection} from "../src/configuration/MongoDbSection";
+import {RetrySection} from "../src/configuration/RetrySection";
 
 describe('getConfig', () => {
     let config: JsonConfigurationManager;
@@ -25,6 +26,13 @@ describe('getConfig', () => {
             },
             mongodb: {
                 connection: 'mongodb://localhost/test'
+            },
+            retry: {
+                cacheRetries: 2,
+                cacheFactor: 2,
+                cacheMinTimeout: 1000,
+                cacheMaxTimeout: 2000,
+                cacheRandomize: false
             }
         }
     });
@@ -62,5 +70,14 @@ describe('getConfig', () => {
     it('get mongoDbSection config', () => {
         const result = config.getSection<MongoDbSection>('mongodb');
         expect(result.connection).to.equals(testValue.mongodb.connection);
+    });
+
+    it('get retrySection config', () => {
+        const result = config.getSection<RetrySection>('retry');
+        expect(result.cacheRetries).to.equals(testValue.retry.cacheRetries);
+        expect(result.cacheFactor).to.equals(testValue.retry.cacheFactor);
+        expect(result.cacheMinTimeout).to.equals(testValue.retry.cacheMinTimeout);
+        expect(result.cacheMaxTimeout).to.equals(testValue.retry.cacheMaxTimeout);
+        expect(result.cacheRandomize).to.equals(testValue.retry.cacheRandomize);
     });
 });

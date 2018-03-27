@@ -11,5 +11,12 @@
     },
     "mongodb": {
         "connection": "mongodb://localhost/test"
+    },
+    "retry": {
+        "cacheRetries": 2,
+        "cacheFactor": 2,
+        "cacheMinTimeout": 1000,
+        "cacheMaxTimeout": 2000,
+        "cacheRandomize": false
     }
 }
