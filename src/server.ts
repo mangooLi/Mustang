@@ -2,39 +2,9 @@ import * as express from "express";
 import * as http from "http";
 import * as socketio from "socket.io";
 import * as redisAdapter from "socket.io-redis";
-import * as dns from "dns";
-import * as retry from "retry";
+import {MiddlewareManager} from "./MiddlewareManager";
 
-function faultTolerantResolve(address: string, cb: (err:Error , errs: Error[], addresses:string[]) => void) {
-    let opts:retry.OperationOptions = {
-        retries: 3,
-        factor: 2,
-        minTimeout: 1 * 1000,
-        maxTimeout: 2 * 1000,
-        randomize: true
-    };
-
-    let operation = retry.operation(opts);
-
-    operation.attempt((current) => {
-        dns.resolve(address, (err,addresses) => {
-            if(operation.retry(err)){
-                return ;
-            }
-            cb(operation.mainError(), operation.errors(), addresses);
-        });
-    });
-}
-
-faultTolerantResolve('nodejis.org', (err, errs, addresses) => {
-    console.warn('err:');
-    console.log(err);
-
-    console.warn('addresses:');
-    console.log(addresses);
-});
-
-
+const middleware = new MiddlewareManager();
 const app = express();
 const listener = http.createServer(app);
 const io = socketio(listener,{
@@ -49,9 +19,11 @@ app.get("/", (req, res) => {
     res.sendfile(__dirname + "/static/index.html");
 });
 
-io.on("connection",(socket) => {
-    if (socket.request.host) {
 
+io.on("connection",(socket) => {
+    middleware.onConnection(socket);
+    
+    if (socket.request.host) {
     } else {
         socket.emit('test', {code:40001, remark: 'error'});
         socket.disconnect();

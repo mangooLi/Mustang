@@ -2,7 +2,7 @@ import BaseReply from './BaseReply';
 import BaseRequest from './BaseRequest';
 import {Socket} from 'socket.io';
 
-export default class WSContext {
+export class WSContext {
 
     constructor(public socket:Socket) {
         this.init();
