@@ -20,6 +20,11 @@ export class CacheManager {
     private redis:redisCache.RedisClient;
 
     /**
+     * 是否存在迁移，如果Redis出现瞬时故障将由Memory暂接管，并在下次Redis恢复后修复。
+     */
+    private migration:boolean;
+
+    /**
      * 
      * @param redisCfg Redis相关配置
      * @param retryCfg 重试机制相关配置
@@ -43,16 +48,30 @@ export class CacheManager {
     }
 
     /**
-     * 
-     * @param key 
+     * 用于防并发的锁
+     */
+    private lock(key: string): boolean {
+        throw new NotImplementedError();
+    }
+
+    /**
+     * 用于释放锁
+     */
+    private unlock(key: string) {
+        throw new NotImplementedError();
+    }
+
+    /**
+     * 从缓存中获取WebSocket会话信息
+     * @param key Token哈希值
      */
     getWSSession(key: string): WSSession {
         throw new NotImplementedError();
     }
 
     /**
-     * 
-     * @param key 
+     * 从缓存中获取WebSocket数据节点
+     * @param key Path哈希值
      */
     getWSNode(key: string): WSNode {
         throw new NotImplementedError();
@@ -67,18 +86,18 @@ export class CacheManager {
     }
 
     /**
-     * 
-     * @param key 
-     * @param value 
+     * 将WebSocket会话信息保存到缓存
+     * @param key Token哈希值
+     * @param value 需要的保存的会话
      */
     putWSSession(key: string, value: WSSession): void {
 
     }
 
     /**
-     * 
-     * @param key 
-     * @param value 
+     * 将WebSocket数据节点保存到缓存
+     * @param key Path哈希值
+     * @param value 需要保存的数据节点
      */
     putWSNode(key: string, value: WSNode): void {
 
@@ -123,5 +142,13 @@ export class CacheManager {
      */
     refresh(key: string): void {
 
+    }
+
+    /**
+     * 用于缓存不存在或无效数据，以防止恶意击破缓存
+     * @param key 无效数据Key
+     */
+    cacheNoExistedData(key: string): void {
+        
     }
 }
