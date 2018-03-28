@@ -2,7 +2,7 @@ import BaseReply from './BaseReply';
 import BaseRequest from './BaseRequest';
 import {Socket} from 'socket.io';
 
-type CommandFunction = (context: WSContext, event: string, data: any) => void;
+type CommandFunction = (context: WSContext) => void;
 type DisconnectionFunction = (context: WSContext) => void;
 
 export class WSContext {
@@ -12,7 +12,9 @@ export class WSContext {
     constructor(public socket:Socket) {
         socket.use((packet, next) => {
             for(let fn of this.commandFns){
-                fn(this, packet[0], packet[1]);
+                this.event = packet[0];
+                this.data = packet[1];
+                fn(this);
             }
             return next();
         });
@@ -23,6 +25,10 @@ export class WSContext {
             }
         });
     }
+
+    event: string;
+    data: any;
+    state: State;
 
     /**
      * 获取来源域名
@@ -60,4 +66,10 @@ export class WSContext {
     close(): void {
         this.socket.disconnect();
     }
+}
+
+export enum State {
+    Connection = 1,
+    Command = 2,
+    Disconnection = 3
 }
