@@ -6,10 +6,10 @@ import { NotImplementedError } from "../error/NotImplementedError";
 /**
  * 访问令牌授权中间件
  */
-export class TokenAuthMiddleware implements Middleware {
+export class TokenAuthMiddleware extends Middleware {
 
     constructor() {
-
+        super();
     }
 
     getHandler(context: WSContext): Handler {

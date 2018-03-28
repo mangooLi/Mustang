@@ -6,10 +6,10 @@ import { NotImplementedError } from "../error/NotImplementedError";
 /**
  * 域名白名单中间件
  */
-export default class OriginAuthMiddleware implements Middleware {
+export default class OriginAuthMiddleware extends Middleware {
 
     constructor() {
-        
+        super();
     }
 
     getHandler(context: WSContext): Handler {
