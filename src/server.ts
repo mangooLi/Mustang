@@ -19,7 +19,9 @@ app.get("/", (req, res) => {
     res.sendfile(__dirname + "/static/index.html");
 });
 
-io.on("connection", middleware.onConnection);
+io.on("connection", (socket) => {
+    middleware.onConnection(socket);
+});
 
 listener.listen(3000, () => {
     console.log("Server listening on port 3000");

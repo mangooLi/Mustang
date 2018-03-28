@@ -6,13 +6,29 @@ import { NotImplementedError } from "../error/NotImplementedError";
 /**
  * 异常中间件，作为全局第一个中间件，负责所有异常日志记录等
  */
-export default class ErrorMiddleware extends Middleware {
+export default class ErrorMiddleware extends Middleware implements Handler {
     
     constructor() {
         super();
     }
 
+    run(context: WSContext): void {
+        let handler = this.getHandler(context);
+
+        if(handler.process(context)) {
+            try {
+                this.next(context);
+            } catch (e) {
+                let ex = e;
+            }
+        }
+    }
+
     getHandler(context: WSContext): Handler {
-        throw new NotImplementedError();
+        return this;
+    }
+
+    process(context: WSContext): boolean {
+        return true;
     }
 }

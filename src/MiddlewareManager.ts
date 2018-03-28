@@ -11,6 +11,7 @@ import ErrorMiddleware from "./middleware/ErrorMiddleware";
  * 中间件管理
  */
 export class MiddlewareManager {
+    private self = this;
     private contexts: Array<WSContext> = [];
     
     /**
@@ -45,6 +46,10 @@ export class MiddlewareManager {
         this.registerMiddleware(commandMid);
     }
 
+    /**
+     * 注册中间件
+     * @param obj 中间件对象
+     */
     registerMiddleware(obj: Middleware): void {
         if(this.firstMiddleware === undefined) {
             this.lastMiddleware = this.firstMiddleware = obj;
@@ -63,8 +68,8 @@ export class MiddlewareManager {
         if(socket && socket.connected) {
             let context = new WSContext(socket);
             context.state = State.Connection;
-            context.onCommand(this.command);
-            context.onDisconnection(this.disconnection);
+            context.onCommand((context) => this.command(context));
+            context.onDisconnection((context) => this.disconnection(context));
             this.contexts.push(context);
         } else {
             //日志记录

@@ -1,6 +1,6 @@
 import {Middleware} from "./Middleware";
 import {Handler} from "../handler/Handler";
-import {WSContext} from "../common/WSContext";
+import {WSContext, State} from "../common/WSContext";
 import { NotImplementedError } from "../error/NotImplementedError";
 
 /**
@@ -13,6 +13,9 @@ export default class OriginAuthMiddleware extends Middleware {
     }
 
     getHandler(context: WSContext): Handler {
-        throw new NotImplementedError();
+        if(context.state == State.Connection){
+
+        }
+        return null;
     }
 }

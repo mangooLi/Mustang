@@ -19,7 +19,7 @@ export abstract class Middleware {
 
     run(context: WSContext): void {
         let handler = this.getHandler(context);
-
+        
         if(handler.process(context)) {
             this.next(context);
         }

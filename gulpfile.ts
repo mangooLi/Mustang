@@ -16,10 +16,15 @@ export class Gulpfile {
         return del(["./build/**"]);
     }
 
+    @Task("copy")
+    copy() {
+        return gulp.src("./src/static/*").pipe(gulp.dest("./build/src/static/"));
+    }
+
     /** 
      * 编译TS文件
     */
-    @Task()
+    @Task("build",["copy"])
     build() {
         return  gulp.src("package.json",{read:false})
             .pipe(shell(["npm run build"]));
