@@ -22,7 +22,10 @@
           path: '/mustang'
         });
         $("form").submit(function(){
-          socket.emit('chat message', $('#m').val());
+          socket.emit('chat message', {
+            'msg':$('#m').val(),
+            'time':123,
+            'isok':true});
           $('#m').val('');
           return false;
         });

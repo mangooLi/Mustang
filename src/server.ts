@@ -19,23 +19,7 @@ app.get("/", (req, res) => {
     res.sendfile(__dirname + "/static/index.html");
 });
 
-
-io.on("connection",(socket) => {
-    middleware.onConnection(socket);
-    
-    if (socket.request.host) {
-    } else {
-        socket.emit('test', {code:40001, remark: 'error'});
-        socket.disconnect();
-    }
-    console.log("a user connected");
-    socket.on('chat message', (msg: string) => {
-        console.log('message: ' + msg);
-    });
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
-    });
-});
+io.on("connection", middleware.onConnection);
 
 listener.listen(3000, () => {
     console.log("Server listening on port 3000");
