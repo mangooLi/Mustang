@@ -47,6 +47,10 @@ export class CacheManager {
         });
     }
 
+    private use(fn: (redisClient: redisCache.RedisClient) => void, retry: boolean, failed: (memoryClient: memoryCache.CacheClass<string, object>) => void) {
+        
+    }
+
     /**
      * 用于防并发的锁
      */
@@ -60,6 +64,8 @@ export class CacheManager {
     private unlock(key: string) {
         throw new NotImplementedError();
     }
+
+    private add
 
     /**
      * 从缓存中获取WebSocket会话信息
