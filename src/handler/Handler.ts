@@ -10,3 +10,12 @@ export interface Handler {
      */
     process(context: WSContext): boolean;
 }
+
+/**
+ * 默认空实现
+ */
+export class NullHandler implements Handler {
+    process(context: WSContext): boolean {
+        return true;
+    }
+}

@@ -3,7 +3,7 @@ import {Middleware} from "./middleware/Middleware";
 import {WSContext, State} from "./common/WSContext";
 import Util from "./util/extensions";
 import OriginAuthMiddleware from "./middleware/OriginAuthMiddleware";
-import { TokenAuthMiddleware } from "./middleware/TokenAuthMiddleware";
+import TokenAuthMiddleware from "./middleware/TokenAuthMiddleware";
 import CommandMiddleware from "./middleware/CommandMiddleware";
 import ErrorMiddleware from "./middleware/ErrorMiddleware";
 
