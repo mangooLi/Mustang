@@ -38,3 +38,4 @@ stage.json
 * IOC采用[InversifyJS](https://github.com/inversify/InversifyJS)支持
 * 日志采用[node-bunyan](https://github.com/trentm/node-bunyan)配合[bunyan-logstash-tcp](https://github.com/transcovo/bunyan-logstash-tcp)直接接入现有的`ELK`日志体系中
 * 异步`MongoDB`刷新采用[kue](https://github.com/Automattic/kue)支持
+* 自动重试采用[node-retry](https://github.com/tim-kos/node-retry)支持
