@@ -15,6 +15,25 @@
             "args": [
                 "${workspaceFolder}/src/server.ts"
             ]
+        },
+        {
+            "name": "调试单元测试",
+            "type": "node",
+            "request": "launch",
+            "protocol": "inspector",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "stopOnEntry": false,
+            "runtimeExecutable": null,
+            "args": [
+                "-u",
+                "tdd",
+                "-r",
+                "ts-node/register",
+                "--no-timeouts",
+                "${workspaceFolder}/test/configuration.spec.ts"
+            ],
+            "cwd": "${workspaceRoot}",
+            "sourceMaps": true,  
         }
     ]
 }

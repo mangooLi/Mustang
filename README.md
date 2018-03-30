@@ -29,6 +29,20 @@ default-stage.json
 stage.json
 ```
 
+#### 如何调试单元测试
+选择调试单元测试，并通过将`launch.json`中的参数修改为需要调试的ts文件即可，比如下方表示调试`configuration.spce.ts`
+```
+            "args": [
+                "-u",
+                "tdd",
+                "-r",
+                "ts-node/register",
+                "--no-timeouts",
+                "${workspaceFolder}/test/configuration.spec.ts"
+            ]
+```
+但是直接使用vscode自带的断点是无法命中的，所以需要在需要调试的代码前临时增加一行代码`debugger`这样后面的断点才会命中。   
+
 ## 实现与依赖框架
 * 配置采用[node-config](https://github.com/lorenwest/node-config)支持
 * Redis存储采用[node-redis](https://github.com/NodeRedis/node_redis)支持
