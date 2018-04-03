@@ -7,6 +7,7 @@ import {WSSession} from "../entity/WSSession";
 import {WSNode} from "../entity/WSNode";
 import {NotImplementedError} from "../error/NotImplementedError";
 
+const RedisLockPrefix = "lock-";
 
 /**
  * 缓存管理
@@ -18,6 +19,7 @@ import {NotImplementedError} from "../error/NotImplementedError";
 export class CacheManager {
     private operation:retry.RetryOperation;
     private redis:redisCache.RedisClient;
+    private memory:memoryCache.CacheClass<string, object>;
 
     /**
      * 是否存在迁移，如果Redis出现瞬时故障将由Memory暂接管，并在下次Redis恢复后修复。
@@ -25,7 +27,7 @@ export class CacheManager {
     private migration:boolean;
 
     /**
-     * 
+     * 初始化构造函数
      * @param redisCfg Redis相关配置
      * @param retryCfg 重试机制相关配置
      */
@@ -37,7 +39,7 @@ export class CacheManager {
             tls: redisCfg.tls,
             db: redisCfg.db
         });
-
+        this.memory = new memoryCache.CacheClass<string, object>();
         this.operation = retry.operation({
             retries: retryCfg.cacheRetries,
             factor: retryCfg.cacheFactor,
@@ -47,25 +49,37 @@ export class CacheManager {
         });
     }
 
-    private use(fn: (redisClient: redisCache.RedisClient) => void, retry: boolean, failed: (memoryClient: memoryCache.CacheClass<string, object>) => void) {
-        
+    private use(key: string, fn: (redisClient: redisCache.RedisClient, retry: (err:Error) => void) => void, failed: (erro: Error, memoryClient: memoryCache.CacheClass<string, object>) => void) {
+        this.operation.attempt((currentAttempt) => {
+            if(this.lock(key)) {
+                fn(this.redis,(err) => {
+                    if(this.operation.retry(err)) {
+                        return;
+                    }
+
+                    failed(err, this.memory);
+                });
+                this.unlock(key);
+            } else {
+                failed(null, this.memory);
+            }
+        });
     }
 
     /**
      * 用于防并发的锁
      */
     private lock(key: string): boolean {
-        throw new NotImplementedError();
+        let op = this.redis.set(RedisLockPrefix + key, "0", "ex", 2, "nx");
+        return op;
     }
 
     /**
      * 用于释放锁
      */
     private unlock(key: string) {
-        throw new NotImplementedError();
+        this.redis.del(RedisLockPrefix + key);
     }
-
-    private add
 
     /**
      * 从缓存中获取WebSocket会话信息
