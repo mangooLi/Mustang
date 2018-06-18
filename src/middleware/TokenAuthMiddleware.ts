@@ -1,18 +1,20 @@
 import {Middleware} from "./Middleware";
-import {Handler} from "../handler/Handler";
-import {WSContext} from "../common/WSContext";
-import { NotImplementedError } from "../error/NotImplementedError";
+import {Handler,NullHandler} from "../handler/Handler";
+import {WSContext,State} from "../common/WSContext";
 
 /**
  * 访问令牌授权中间件
  */
-export class TokenAuthMiddleware extends Middleware {
+export default class TokenAuthMiddleware extends Middleware {
 
     constructor() {
         super();
     }
 
     getHandler(context: WSContext): Handler {
-        throw new NotImplementedError();
+        if(context.state == State.Connection){
+
+        }
+        return new NullHandler();
     }
 }
